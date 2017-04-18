@@ -49,5 +49,6 @@ class Pantry
         menu << recipe.name
       end
     end
+    menu
   end
 end
