@@ -1,4 +1,5 @@
 require './lib/recipe'
+require 'pry'
 
 class Pantry
 
@@ -17,9 +18,8 @@ class Pantry
   end
 
   def add_to_shopping_list(recipe)
-    recipe.ingredients.each do |ingredient|
-      shopping_list[ingredient] = shopping_list[ingredient] += r[ingredient]
+    recipe.ingredients.each do |ingredient, quantity|
+      shopping_list[ingredient] += quantity
     end
-
   end
 end
