@@ -37,7 +37,7 @@ class PantryTest < Minitest::Test
     assert_equal 30, pantry.stock_check("Cheese")
   end
 
-  def test_it_can_add_to_shopping_list
+  def test_it_can_add_a_recipe_to_shopping_list
     pantry = Pantry.new
     r = Recipe.new("Cheese Pizza")
     r.add_ingredient("Flour", 500)
@@ -45,6 +45,41 @@ class PantryTest < Minitest::Test
     pantry.add_to_shopping_list(r)
 
     assert_equal  ({"Cheese" => 1500, "Flour" => 500}), pantry.shopping_list
+  end
+
+
+  def test_it_can_add_multiple_recipes_to_shopping_list
+    pantry = Pantry.new
+    recipe_1 = Recipe.new("Cheese Pizza")
+    recipe_1.add_ingredient("Flour", 500)
+    recipe_1.add_ingredient("Cheese", 1500)
+    pantry.add_to_shopping_list(recipe_1)
+    recipe_2 = Recipe.new("Spaghetti")
+    recipe_2.add_ingredient("Noodles", 10)
+    recipe_2.add_ingredient("Sauce", 10)
+    recipe_2.add_ingredient("Cheese", 5)
+    pantry.add_to_shopping_list(recipe_2)
+
+    assert_equal  ({"Cheese" => 1505,
+                    "Flour" => 500,
+                    "Noodles"=> 10,
+                    "Sauce"=> 10,}), pantry.shopping_list
+  end
+
+  def test_it_can_print_shopping_list
+    pantry = Pantry.new
+    recipe_1 = Recipe.new("Cheese Pizza")
+    recipe_1.add_ingredient("Flour", 500)
+    recipe_1.add_ingredient("Cheese", 1500)
+    pantry.add_to_shopping_list(recipe_1)
+    recipe_2 = Recipe.new("Spaghetti")
+    recipe_2.add_ingredient("Noodles", 10)
+    recipe_2.add_ingredient("Sauce", 10)
+    recipe_2.add_ingredient("Cheese", 5)
+    pantry.add_to_shopping_list(recipe_2)
+
+    assert_equal  "* Cheese: 1505\n* Flour: 500\n* Noodles: 10\n* Marinara Sauce: 10", pantry.print_shopping_list
+
   end
 
 
