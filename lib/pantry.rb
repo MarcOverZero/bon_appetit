@@ -3,10 +3,11 @@ require 'pry'
 
 class Pantry
 
-  attr_reader :stock, :shopping_list
+  attr_reader :stock, :shopping_list, :cookbook
   def initialize
     @stock = Hash.new(0)
     @shopping_list = Hash.new(0)
+    @cookbook = []
   end
 
   def stock_check(item)
@@ -30,4 +31,21 @@ class Pantry
     end
     shopping_list_string
   end
+
+  def add_to_cookbook(recipe)
+    cookbook << recipe
+  end
+
+  def what_can_i_make
+    menu = []
+    cookbook.each do |recipe|
+      can_make = true
+      recipe.each do |ingredient, quantity|
+        if stock[ingredient] -= quantity < 0 ?
+          can_make = false
+        end
+    binding.pry
+    "-"
+  end
+
 end

@@ -68,19 +68,80 @@ class PantryTest < Minitest::Test
 
   def test_it_can_print_shopping_list
     pantry = Pantry.new
+
     recipe_1 = Recipe.new("Cheese Pizza")
     recipe_1.add_ingredient("Flour", 500)
     recipe_1.add_ingredient("Cheese", 1500)
     pantry.add_to_shopping_list(recipe_1)
+
     recipe_2 = Recipe.new("Spaghetti")
     recipe_2.add_ingredient("Noodles", 10)
     recipe_2.add_ingredient("Sauce", 10)
     recipe_2.add_ingredient("Cheese", 5)
-    pantry.add_to_shopping_list(recipe_2)
-    
-    assert_equal  "* Flour: 500\n* Cheese: 1505\n* Noodles: 10\n* Sauce: 10\n", pantry.print_shopping_list
 
+    pantry.add_to_shopping_list(recipe_2)
+
+    assert_equal  "* Flour: 500\n* Cheese: 1505\n* Noodles: 10\n* Sauce: 10\n", pantry.print_shopping_list
   end
+
+  def test_it_can_add_a_recipe_to_cookbook
+    pantry = Pantry.new
+
+    r1 = Recipe.new("Cheese Pizza")
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+
+    pantry.add_to_cookbook(r1)
+
+    assert_equal [r1], pantry.cookbook
+  end
+
+  def test_it_can_add_multiple_recipes_to_cookbook
+    pantry = Pantry.new
+
+    r1 = Recipe.new("Cheese Pizza")
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+    pantry.add_to_cookbook(r1)
+
+    r2 = Recipe.new("Pickles")
+    r2.add_ingredient("Brine", 10)
+    r2.add_ingredient("Cucumbers", 30)
+    pantry.add_to_cookbook(r2)
+
+
+    assert_equal [r1,r2], pantry.cookbook
+  end
+
+  def test_it_knows_what_i_can_make
+    pantry = Pantry.new
+
+    r1 = Recipe.new("Cheese Pizza")
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+
+    r2 = Recipe.new("Pickles")
+    r2.add_ingredient("Brine", 10)
+    r2.add_ingredient("Cucumbers", 30)
+
+    r3 = Recipe.new("Peanuts")
+    r3.add_ingredient("Raw nuts", 10)
+    r3.add_ingredient("Salt", 10)
+
+    pantry.add_to_cookbook(r1)
+    pantry.add_to_cookbook(r2)
+    pantry.add_to_cookbook(r3)
+
+    pantry.restock("Cheese", 10)
+    pantry.restock("Flour", 20)
+    pantry.restock("Brine", 40)
+    pantry.restock("Cucumbers", 40)
+    pantry.restock("Raw nuts", 20)
+    pantry.restock("Salt", 20)
+
+    assert_equal ["Pickles", "Peanuts"], pantry.what_can_i_make
+  end
+
 
 
 
