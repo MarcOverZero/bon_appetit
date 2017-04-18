@@ -40,12 +40,14 @@ class Pantry
     menu = []
     cookbook.each do |recipe|
       can_make = true
-      recipe.each do |ingredient, quantity|
-        if stock[ingredient] -= quantity < 0 ?
+      recipe.ingredients.each do |ingredient, quantity|
+        if (stock[ingredient] -= quantity) < 0
           can_make = false
         end
-    binding.pry
-    "-"
+      end
+      if can_make == true
+        menu << recipe.name
+      end
+    end
   end
-
 end
