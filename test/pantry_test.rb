@@ -1,4 +1,5 @@
 require './lib/pantry'
+require './lib/recipe'
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -35,6 +36,18 @@ class PantryTest < Minitest::Test
 
     assert_equal 30, pantry.stock_check("Cheese")
   end
+
+  def test_it_can_add_to_shopping_list
+    pantry = Pantry.new
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Flour", 500)
+    r.add_ingredient("Cheese", 1500)
+
+    assert_equal  ({"Cheese" => 1500, "Flour" => 500}), pantry.shopping_list
+  end
+
+
+
 
 
 end
