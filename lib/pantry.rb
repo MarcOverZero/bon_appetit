@@ -26,8 +26,8 @@ class Pantry
   def print_shopping_list
     shopping_list_string = ""
     shopping_list.each do |ingredient, quantity|
-      shopping_list_string + "* #{ingredient}: #{quantity},\n"
+      shopping_list_string += "* #{ingredient}: #{quantity}\n"
     end
-    p shopping_list_string
+    shopping_list_string
   end
 end
