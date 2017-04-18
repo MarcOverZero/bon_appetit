@@ -3,11 +3,12 @@ require 'pry'
 
 class Pantry
 
-  attr_reader :stock, :shopping_list, :cookbook
+  attr_reader :stock, :shopping_list, :cookbook, :menu
   def initialize
     @stock = Hash.new(0)
     @shopping_list = Hash.new(0)
     @cookbook = []
+    @menu = []
   end
 
   def stock_check(item)
@@ -37,7 +38,6 @@ class Pantry
   end
 
   def what_can_i_make
-    menu = []
     cookbook.each do |recipe|
       can_make = true
       recipe.ingredients.each do |ingredient, quantity|
@@ -50,5 +50,19 @@ class Pantry
       end
     end
     menu
+  end
+
+  def how_many_can_i_make
+    makeable = {}
+    menu.map do |recipe|
+      recipe.ingredients.each do |ingredient, quantity|
+        stock_quantity = stock[ingredient]
+        number_makeable = 0
+        while stock_quantity > 0
+          stock[ingredient] -= quantity
+          number_makeable += 1
+        end
+        makeable[
+
   end
 end
